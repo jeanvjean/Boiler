@@ -1,0 +1,34 @@
+{
+    "defaultEnv": {"ENV": "NODE_ENV"},
+    "development": {
+      "driver": "pg",
+      "user": {"ENV": "DEV_DATABASE_USER"},
+      "password": {"ENV": "DEV_DATABASE_PASSWORD"},
+      "host": {"ENV": "DEV_DATABASE_HOST"},
+      "database": {"ENV": "DEV_DATABASE_NAME"},
+      "port": {"ENV": "DEV_DATABASE_PORT"},
+      "max": {"ENV": "DEV_DATABASE_MAX_CONNECTIONS"}
+    },
+    "test":{
+      "driver": "pg",
+      "user": {"ENV": "TEST_DATABASE_USER"},
+      "password": {"ENV": "TEST_DATABASE_PASSWORD"},
+      "host": {"ENV": "TEST_DATABASE_HOST"},
+      "database": {"ENV": "TEST_DATABASE_NAME"},
+      "port": {"ENV": "TEST_DATABASE_PORT"},
+      "max": {"ENV": "TEST_DATABASE_MAX_CONNECTIONS"}
+    },
+    "prod":{
+        "ENV": "PROD_DATABASE_URL"
+    },
+    "staging":{
+        "driver": "pg",
+        "user": {"ENV": "STAGING_DATABASE_USER"},
+        "password": {"ENV": "STAGING_DATABASE_PASSWORD"},
+        "host": {"ENV": "STAGING_DATABASE_HOST"},
+        "database": {"ENV": "STAGING_DATABASE_NAME"},
+        "port": {"ENV": "STAGING_DATABASE_PORT"},
+        "max": {"ENV": "STAGING_DATABASE_MAX_CONNECTIONS"}
+    },
+    "sql-file": true
+  }
