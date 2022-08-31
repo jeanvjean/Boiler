@@ -5,7 +5,6 @@ import MailService from '../../services/service.email';
 import * as HospitalPayload from '../../lib/payloads/lib.payload.hospital';
 import config from '../../config/setup';
 import * as SmsService from '../../services/service.sms';
-import * as CustomerService from '../services/service.customer';
 
 export const decodeCsv = async(req, res, next) => {
   const { files } = req;
@@ -95,7 +94,7 @@ export const sendCustomersEmail = async(req, res, next) => {
     const smsPayload = {
       to: Helper.parsePhoneNumberToStandard(email.phone),
       // eslint-disable-next-line max-len
-      message: `Hello ${email.name}, \nwe have added new hospitals to Casava health hospital list.\nPlease visit ${config.INSURANCE_URL}auth/login to choose a new hospital that suits you.\nCall us on 07025004444 for help.`,
+      message: `Dear valued customer, \nthe Casava health hospital list has been updated.\nKindly click ${config.INSURANCE_URL}auth/login to choose a new hospital.\nCall 07025004444 if you need assistance.`,
     };
     MailService('Change hospital', 'change_hospital', data);
     SmsService.sendSMS(smsPayload);
