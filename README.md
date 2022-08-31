@@ -1,9 +1,8 @@
 <==========================================>
 ## Getting Started
+git clone https://casava-dev@bitbucket.org/casava-dev/casava-open.git
 
-git clone https://github.com/enyata/mdaas.git
-
-cd mdaas
+cd casava-open
 
 - run: npm install to install dependencies, 
 
