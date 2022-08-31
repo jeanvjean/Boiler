@@ -1,19 +1,21 @@
 import request from 'request';
-import * as config from '../config/setup';
+import config from '../config/setup';
+
+console.log({ url: config.SMS_SENDER_URL });
 
 export const sendSMS = (payload) => {
   try {
     const data = {
       to: payload.to,
-      from: config.SENDER_ID,
+      from: config.SMS_SENDER_ID,
       sms: payload.message,
       type: 'plain',
-      api_key: config.DEV.SMS_SERVICE_API_KEY,
+      api_key: config.SMS_API_KEY,
       channel: 'generic',
     };
     const options = {
       method: 'POST',
-      url: `${config.SMS_SERVICE_URL}/api/sms/send`,
+      url: `${config.SMS_SENDER_URL}/api/sms/send`,
       headers: {
         'Content-Type': [ 'application/json', 'application/json' ],
       },

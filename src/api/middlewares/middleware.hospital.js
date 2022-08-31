@@ -4,6 +4,8 @@ import * as Helper from '../../lib/utils/lib.helpers';
 import MailService from '../../services/service.email';
 import * as HospitalPayload from '../../lib/payloads/lib.payload.hospital';
 import config from '../../config/setup';
+import * as SmsService from '../../services/service.sms';
+import * as CustomerService from '../services/service.customer';
 
 export const decodeCsv = async(req, res, next) => {
   const { files } = req;
@@ -51,18 +53,18 @@ export const getHospitalCustomers = async(req, res, next) => {
       {
         name,
         email,
-        phone_number,
+        phone,
       }, index,
     ) => ({
       SN: index + 1,
       Name: name,
       email,
-      'phone number': phone_number,
+      'phone number': phone,
 
     }),
   );
   const genCsv = Helper.toCSV({ fields, data });
-  const fileName = `hospital-${new Date().getTime()}.csv`;
+  const fileName = `hospital_customers-${new Date().getTime()}.csv`;
   const filePath = Helper.writeToFile({ fileName, content: genCsv });
   const emailData = {
     name: 'admin',
@@ -90,7 +92,13 @@ export const sendCustomersEmail = async(req, res, next) => {
       name: email.name,
       link: `${config.INSURANCE_URL}auth/login/`,
     };
+    const smsPayload = {
+      to: Helper.parsePhoneNumberToStandard(email.phone),
+      // eslint-disable-next-line max-len
+      message: `Hello ${email.name}, \nwe have added new hospitals to Casava health hospital list.\nPlease visit ${config.INSURANCE_URL}auth/login to choose a new hospital that suits you.\nCall us on 07025004444 for help.`,
+    };
     MailService('Change hospital', 'change_hospital', data);
+    SmsService.sendSMS(smsPayload);
     return email;
   });
   return next();
