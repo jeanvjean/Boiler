@@ -19,7 +19,7 @@ const db = pg({
 
 const connection = (app, port) => new Promise(async resolve => {
   port = port || (await detectPort());
-  const server = app.listen(port, () => {
+  const server = app.listen(port, '0.0.0.0', () => {
     logger.log(`Listening on port ${server.address().port}`);
     const originalClose = server.close.bind(server);
     server.close = () => new Promise(resolveClose => {
