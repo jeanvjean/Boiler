@@ -1,5 +1,5 @@
 {
-  "name": "mdaas-api",
+  "name": "open-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,7 +11,6 @@
     "test": "NODE_ENV=test mocha --timeout 100000 --require @babel/register tests/test --exit",
     "lint": "eslint --fix src/ --ext .js ",
     "start": "babel-node src/app.js",
-    "prestart": "db-migrate up --config database.json",
     "create:migration": "node node_modules/db-migrate/bin/db-migrate --config database.json create",
     "migrate_down": "db-migrate reset -c 100 --config database.json",
     "migrate_up": "db-migrate up --config database.json",
