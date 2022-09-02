@@ -7,10 +7,10 @@
     "doc": "docs"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node --max-old-space-size=4096 src/app.js",
+    "dev": "nodemon --exec babel-node --max-old-space-size=8192 src/app.js",
     "test": "NODE_ENV=test mocha --timeout 100000 --require @babel/register tests/test --exit",
     "lint": "eslint --fix src/ --ext .js ",
-    "start": "babel-node src/app.js",
+    "start": "babel-node --max-old-space-size=8192 src/app.js",
     "create:migration": "node node_modules/db-migrate/bin/db-migrate --config database.json create",
     "migrate_down": "db-migrate reset -c 100 --config database.json",
     "migrate_up": "db-migrate up --config database.json",
