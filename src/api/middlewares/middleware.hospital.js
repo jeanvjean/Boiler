@@ -85,21 +85,23 @@ export const getHospitalCustomers = async(req, res, next) => {
 
 export const sendCustomersEmail = async(req, res, next) => {
   const { hospitalUsers } = req;
-  hospitalUsers.map(email => {
+  const emails = hospitalUsers.map(email => email.email);
+  const phone = hospitalUsers.map(email => Helper.parsePhoneNumberToStandard(email.phone));
+  if (emails.length > 0) {
     const data = {
-      email: email.email,
-      name: email.name,
+      email: emails,
       link: `${config.INSURANCE_URL}auth/login/`,
     };
+    MailService('Change hospital', 'change_hospital', data);
+  }
+  if (phone.length > 0) {
     const smsPayload = {
-      to: Helper.parsePhoneNumberToStandard(email.phone),
+      to: phone,
       // eslint-disable-next-line max-len
       message: `Dear valued customer, \nthe Casava health hospital list has been updated.\nKindly click ${config.INSURANCE_URL}auth/login to choose a new hospital.\nCall 07025004444 if you need assistance.`,
     };
-    MailService('Change hospital', 'change_hospital', data);
     SmsService.sendSMS(smsPayload);
-    return email;
-  });
+  }
   return next();
 };
 
@@ -112,7 +114,7 @@ export const removeHospitals = async(req, res, next) => {
 };
 
 export const addHospitals = async(req, res, next) => {
-  const { newHospitals } = req;
+  const { hospitalFiles: newHospitals } = req;
   newHospitals.map(async hospital => {
     const hospitalPayload = HospitalPayload.createHospital(hospital);
     const exists = await HospitalService.getHospital(hospitalPayload.slug);
