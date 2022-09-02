@@ -7,7 +7,7 @@ export const change_hospital = data => `
             <tr>
                 <td style="color:#333333;">
                     <p style="margin:60px 0 12px 0;text-align: inherit; line-height:32px;font-family:Inter,sans-serif;">
-                        Hello ${data.name},
+                        Hello,
                     </p>
                 </td>
             </tr>
