@@ -14,7 +14,7 @@ router.post(
   catchErrors(Middleware.fetchHospitalList),
   catchErrors(Middleware.compareHospitalRecords),
   catchErrors(Middleware.getHospitalCustomers),
-  catchErrors(Middleware.sendCustomersEmail),
+  // catchErrors(Middleware.sendCustomersEmail),
   catchErrors(Middleware.removeHospitals),
   catchErrors(Middleware.addHospitals),
   catchErrors(Controller.hospitalUpdated),

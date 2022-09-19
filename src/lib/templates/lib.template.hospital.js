@@ -95,3 +95,56 @@ export const hospital_customers = data => `
     </td>
     </tr>
 `;
+
+export const failed_payment = data => `
+<tr>
+    <td style="padding:3px 30px 42px 30px;">
+        <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
+            <tr>
+                <td style="color:#333333;">
+                    <p style="margin:60px 0 12px 0;text-align: inherit; line-height:32px;font-family:Inter,sans-serif;">
+                        Hello {{customer_name}},
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content">
+                    <div style="font-family: inherit; text-align: inherit">
+                        <div style="margin: 10px 0 12px 0">
+                            <div>
+                                Please be informed your premium payment for the month of {{month}} failed and we were unable to charge your card. 
+                                
+                                Kindly ensure to fund your account to enable payment of the policy. Your policy is at risk of being cancelled should 
+                                further debit attempts fail and your 2 week grace period elapses. 
+                                
+                            </div>
+                            <br>
+                        </div>
+                        <div>
+                            Thank you. <br>
+                            Need further help? Still send us an email hello@casava.co.or call us on 07025004444. 
+                        </div>
+                        <br>
+                        <div>
+                            From your friends at Casava. <br>
+                            Insurance you enjoy.
+                        </div>
+                        <br>
+                    <br>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="margin: 20px 0 12px 0">
+                    <div style="margin-bottom: 5px">Your Health Partner,</div>
+                    <div>Funmi from Casava</div>
+                </td>
+            </tr>
+        </table>
+    </td>
+    </tr>
+`;
+
+export const general_template = (data, template) => template.replace(/{name}/g, data.name).replace(/{date}/g, data.date);
