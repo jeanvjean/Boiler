@@ -1,5 +1,6 @@
 import Mailer from '../../services/service.email';
 import * as Brocker from '../../config/brockers/sender';
+import ApiResponse from '../../lib/http/lib.http.response';
 
 export const sendEmail = async(req, res) => {
   const { body: { message } } = req;
@@ -13,4 +14,5 @@ export const sendEmail = async(req, res) => {
     attachment: msg.attachment,
     template: msg.template,
   }));
+  return ApiResponse.success(res, 'emails sent successfully', 200);
 };
