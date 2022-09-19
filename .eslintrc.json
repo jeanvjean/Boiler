@@ -125,7 +125,8 @@
         }
       ],
       "func-names": ["error", "never"],
-      "no-console": "off"
+      "no-console": "off",
+      "no-unused-expressions":["off"]
     }
   }
   
