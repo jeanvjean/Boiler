@@ -6,9 +6,6 @@ import { commonTemplate } from '../lib/templates/lib.template.common';
 const MailService = async({
   subject, type, data, bc, cc, attachment, template,
 }) => {
-  console.log({
-    subject, type, data, bc, cc, attachment, template,
-  });
   const transporter = nodemailer.createTransport(smtpTransport({
     service: `${config.EMAIL_SENDER_SERVICE}`,
     port: 587,

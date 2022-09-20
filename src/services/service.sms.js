@@ -1,8 +1,6 @@
 import request from 'request';
 import config from '../config/setup';
 
-console.log({ url: config.SMS_SENDER_URL });
-
 export const sendSMS = (payload) => {
   try {
     const data = {
