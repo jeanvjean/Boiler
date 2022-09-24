@@ -6,7 +6,7 @@ export const sendEmail = async(req, res) => {
   const { body: { message } } = req;
   const sendMessage = JSON.parse(message);
   const {
-    subject, type, data, bcc, cc, attachment, template,
+    subject, type, data, bcc, cc, attachment, template, from,
   } = sendMessage;
   data.map(msg => Mailer({
     subject,
@@ -16,6 +16,8 @@ export const sendEmail = async(req, res) => {
     cc,
     attachment,
     template,
+    from,
   }));
   return ApiResponse.success(res, 'emails sent successfully', 200);
 };
+// http://13.40.61.199:8000

@@ -4,7 +4,7 @@ import config from '../config/setup';
 import { commonTemplate } from '../lib/templates/lib.template.common';
 
 const MailService = async({
-  subject, type, data, bc, cc, attachment, template,
+  subject, type, data, bc, cc, attachment, template, from,
 }) => {
   const transporter = nodemailer.createTransport(smtpTransport({
     service: `${config.EMAIL_SENDER_SERVICE}`,
@@ -16,7 +16,7 @@ const MailService = async({
   }));
 
   const mailOptions = {
-    from: `${config.EMAIL_SENDER}`,
+    from: `${from} <${config.EMAIL_SENDER}>`,
     bc,
     cc,
     to: data.email,
