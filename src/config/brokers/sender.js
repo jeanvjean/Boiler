@@ -1,4 +1,5 @@
 import amqp from 'amqplib/callback_api';
+import { SendEmailQueue } from './consumer';
 
 export const SendEmailConsumer = (message, channelName) => {
   amqp.connect('amqp://localhost', (err, conn) => {
@@ -7,9 +8,9 @@ export const SendEmailConsumer = (message, channelName) => {
       if (e) { throw e; }
       const QUEUE = channelName;
       channel.assertQueue(QUEUE);
-      channel.sendToQueue(QUEUE, Buffer.from(message));
-      channel.consume(QUEUE);
-      channel.ack();
+      channel.sendToQueue(QUEUE, Buffer.from(message.message));
+      SendEmailQueue(QUEUE);
+      // channel.ack();
     });
   });
 };
