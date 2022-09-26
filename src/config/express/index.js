@@ -16,8 +16,8 @@ const expressConfig = app => {
     }),
   );
 
-  app.use(json());
-  app.use(cors());
+  app.use(json({ limit: '50mb' }));
+  app.use(cors({ limit: '50mb' }));
 
   router(app);
 
