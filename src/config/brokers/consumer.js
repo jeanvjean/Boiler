@@ -3,7 +3,7 @@ import Mailer from '../../services/service.email';
 import config from '../setup';
 
 export const SendEmailQueue = (channelName) => {
-  amqp.connect(config.BROKER_URL, (err, conn) => {
+  amqp.connect(`amqp://${config.BROKER_USER}:${config.BROKER_PASSWORD}@${config.BROKER_URL}`, (err, conn) => {
     if (err) { throw err; }
     conn.createChannel((e, channel) => {
       if (e) { throw e; }
