@@ -5,7 +5,7 @@ import config from '../setup';
 console.log(`amqp://${config.BROKER_USER}:${config.BROKER_PASSWORD}@${config.BROKER_URL}:${config.BROKER_PORT}`);
 
 export const SendEmailConsumer = (message, channelName) => {
-  amqp.connect(`amqp://${config.BROKER_USER}:${config.BROKER_PASSWORD}@${config.BROKER_URL}`, (err, conn) => {
+  amqp.connect(`amqp://${config.BROKER_USER}:${config.BROKER_PASSWORD}@${config.BROKER_URL}:${config.BROKER_PORT}`, (err, conn) => {
     if (err) { throw err; }
     conn.createChannel((e, channel) => {
       if (e) { throw e; }
