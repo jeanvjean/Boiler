@@ -7,7 +7,8 @@ import config from '../../config/setup';
 import * as SmsService from '../../services/service.sms';
 
 export const decodeCsv = async(req, res, next) => {
-  const { files } = req;
+  const { files, query: { from } } = req;
+  if (from === 'raw') { return next(); }
   const hospital = await csv().fromFile(files[0].path);
   req.hospitalFiles = hospital;
   return next();
