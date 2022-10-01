@@ -11,7 +11,7 @@ export const SendEmailQueue = (channelName) => {
     conn.createChannel((e, channel) => {
       if (e) { throw e; }
       const QUEUE = channelName;
-      channel.assertQueue(QUEUE);
+      channel.assertQueue(QUEUE, { durable: true });
       channel.consume(QUEUE, (msg) => {
         const { content } = msg;
         const sendMessage = JSON.parse(content.toString());
@@ -41,7 +41,7 @@ export const SendSmsQueue = (channelName) => {
     conn.createChannel((e, channel) => {
       if (e) { throw e; }
       const QUEUE = channelName;
-      channel.assertQueue(QUEUE);
+      channel.assertQueue(QUEUE, { durable: true });
       channel.consume(QUEUE, (msg) => {
         const { content } = msg;
         const sendMessage = JSON.parse(content.toString());
