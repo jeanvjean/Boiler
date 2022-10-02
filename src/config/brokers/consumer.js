@@ -5,7 +5,7 @@ import * as SmsService from '../../services/service.sms';
 import config from '../setup';
 import * as Helper from '../../lib/utils/lib.helpers';
 
-export const SendEmailQueue = (channelName) => {
+export const SendEmailConsumer = (channelName) => {
   amqp.connect(`amqp://${config.BROKER_USER}:${config.BROKER_PASSWORD}@${config.BROKER_URL}`, (err, conn) => {
     if (err) { throw err; }
     conn.createChannel((e, channel) => {
@@ -16,7 +16,7 @@ export const SendEmailQueue = (channelName) => {
         const { content } = msg;
         const sendMessage = JSON.parse(content.toString());
         const {
-          subject, type, data, bcc, cc, attachment, template, from,
+          subject, type, data, bcc, cc, attachment, template, from, sender,
         } = sendMessage;
         data.map(msgs => Mailer({
           subject,
@@ -27,6 +27,7 @@ export const SendEmailQueue = (channelName) => {
           attachment,
           template,
           from,
+          sender,
         }));
       }, {
         noAck: true,
@@ -35,7 +36,7 @@ export const SendEmailQueue = (channelName) => {
   });
 };
 
-export const SendSmsQueue = (channelName) => {
+export const SendSmsConsumer = (channelName) => {
   amqp.connect(`amqp://${config.BROKER_USER}:${config.BROKER_PASSWORD}@${config.BROKER_URL}`, (err, conn) => {
     if (err) { throw err; }
     conn.createChannel((e, channel) => {
