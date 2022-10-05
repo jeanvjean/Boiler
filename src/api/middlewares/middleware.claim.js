@@ -5,6 +5,4 @@ import * as ClaimService from '../services/service.claim';
 
 export const getClaims = async(req, res, next) => {
   const claim = await ClaimService.getClaims();
-  console.log({ claim });
-  return;
 };

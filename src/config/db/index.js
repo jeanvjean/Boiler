@@ -6,6 +6,14 @@ import detectPort from 'detect-port';
 import config from '../setup';
 import { logger } from '../logger';
 
+const admin = require('firebase-admin');
+
+const serviceAccount = require('../../../serviceAccountKey.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
 const pg = pgp({ promiseLib: promise, noWarnings: true });
 
 const db = pg({
@@ -39,4 +47,6 @@ const connection = (app, port) => new Promise(async resolve => {
   resolve(server);
 });
 
-export { db, connection };
+const fbDb = admin.firestore();
+
+export { db, connection, fbDb };
