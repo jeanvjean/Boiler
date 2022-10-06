@@ -5,7 +5,7 @@ import { fbDb } from '../../config/db';
 const myDb = fbDb.collection('Engagement');
 
 export const createData = async payload => {
-  const saveData = await myDb.doc(`${payload.client_ip}`).set({ ...payload });
+  const saveData = await myDb.doc(`${payload.ip_address}`).set({ ...payload });
   return 'done';
 };
 

@@ -40,11 +40,11 @@ export const countVisits = async(req, res) => {
     query: { type }, client_ip, engagement, total_count,
   } = req;
   if (type === 'count') {
-    const count = engagement.visits ? +engagement.visits + 1 : 1;
+    const count = engagement ? +engagement.visits + 1 : 1;
     let total = total_count;
     if (!engagement) {
       total += 1;
-      await MessageService.createData({ client_ip, count });
+      await MessageService.createData({ ip_address: client_ip, visits: count });
     } else {
       await MessageService.updateEngagementData({ ...engagement, visits: count });
     }
