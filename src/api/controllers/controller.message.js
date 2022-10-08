@@ -1,30 +1,41 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import csv from 'csvtojson';
+import { unlinkSync } from 'fs-extra';
 import * as Broker from '../../config/brokers/sender';
 import ApiResponse from '../../lib/http/lib.http.response';
 import * as MessageService from '../services/service.message';
 
 export const sendEmail = async(req, res) => {
-  const { query: { from, type, sender }, hospitalFiles, body: { message } } = req;
+  const {
+    query: { from, type, sender }, files, hospitalFiles, body: { message },
+  } = req;
+  console.log({ message });
+  // console.log({ d: JSON.parse(message) });
+  // return;
   if (from === 'csv') {
     if (type === 'sms') {
-      await Broker.SendSmsPublisher(JSON.stringify(hospitalFiles), 'bulk_sms');
+      const QUEUE_NAME = `bulk_sms_${Math.random() * 1000}`;
+      await Broker.SendSmsPublisher(JSON.stringify(hospitalFiles), QUEUE_NAME);
       return ApiResponse.success(res, 'sms(s) sent successfully', 200);
     }
     if (type === 'email') {
-      await Broker.SendEmailPublisher(JSON.stringify(hospitalFiles), 'bulk_mail');
+      const QUEUE_NAME = `bulk_email_${Math.random() * 1000}`;
+      await Broker.SendEmailPublisher(JSON.stringify(hospitalFiles), QUEUE_NAME);
       return ApiResponse.success(res, 'email(s) sent successfully', 200);
     }
   }
   if (from === 'raw') {
     if (type === 'sms') {
-      await Broker.SendSmsPublisher(req.body, 'bulk_sms');
+      const QUEUE_NAME = `bulk_sms_${Math.random() * 1000}`;
+      await Broker.SendSmsPublisher(req.body, QUEUE_NAME);
       return ApiResponse.success(res, 'sms(s) sent successfully', 200);
     }
     if (type === 'email') {
+      const QUEUE_NAME = `bulk_email_${Math.random() * 1000}`;
       const msg = JSON.parse(message);
-      await Broker.SendEmailPublisher(JSON.stringify({ ...msg, sender }), 'bulk_mail');
+      await Broker.SendEmailPublisher(JSON.stringify({ ...msg, sender }), QUEUE_NAME);
+      // files ? unlinkSync(files[0].path) : undefined;
       return ApiResponse.success(res, 'email(s) sent successfully', 200);
     }
   }
