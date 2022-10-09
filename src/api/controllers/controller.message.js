@@ -2,6 +2,8 @@
 /* eslint-disable no-unused-vars */
 import csv from 'csvtojson';
 import { unlinkSync } from 'fs-extra';
+import path from 'path';
+import * as Helper from '../../lib/utils/lib.helpers';
 import * as Broker from '../../config/brokers/sender';
 import ApiResponse from '../../lib/http/lib.http.response';
 import * as MessageService from '../services/service.message';
@@ -10,9 +12,18 @@ export const sendEmail = async(req, res) => {
   const {
     query: { from, type, sender }, files, hospitalFiles, body: { message },
   } = req;
-  console.log({ message });
-  // console.log({ d: JSON.parse(message) });
-  // return;
+  const attachments = [];
+  if (files && files.length > 0) {
+    for (const file of files) {
+      attachments.push({
+        // eslint-disable-next-line no-await-in-loop
+        content: await Helper.fileGetContent(file.path),
+        filename: file.originalname,
+        type: file.mimetype,
+        disposition: 'attachment',
+      });
+    }
+  }
   if (from === 'csv') {
     if (type === 'sms') {
       const QUEUE_NAME = `bulk_sms_${Math.random() * 1000}`;
@@ -34,7 +45,7 @@ export const sendEmail = async(req, res) => {
     if (type === 'email') {
       const QUEUE_NAME = `bulk_email_${Math.random() * 1000}`;
       const msg = JSON.parse(message);
-      await Broker.SendEmailPublisher(JSON.stringify({ ...msg, sender }), QUEUE_NAME);
+      await Broker.SendEmailPublisher(JSON.stringify({ ...msg, sender, attachment: attachments }), QUEUE_NAME);
       // files ? unlinkSync(files[0].path) : undefined;
       return ApiResponse.success(res, 'email(s) sent successfully', 200);
     }

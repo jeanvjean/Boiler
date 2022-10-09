@@ -11,6 +11,7 @@
     "test": "NODE_ENV=test mocha --timeout 100000 --require @babel/register tests/test --exit",
     "lint": "eslint --fix src/ --ext .js ",
     "pm2": "pm2 start pm2.json",
+    "build": "babel src -d dist",
     "start": "babel-node --max-old-space-size=8192 src/app.js",
     "create:migration": "node node_modules/db-migrate/bin/db-migrate --config database.json create",
     "migrate_down": "db-migrate reset -c 100 --config database.json",
